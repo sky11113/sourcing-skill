@@ -4,11 +4,11 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.2
+### AI寻源需求澄清Skill V1.3
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
-V1.2 supports:
+V1.3 supports:
 
 - one-question-at-a-time requirement clarification;
 - stopping clarification at about 80% completeness;

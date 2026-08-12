@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.3
+### AI寻源需求澄清Skill V1.4
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -17,5 +17,11 @@ V1.3 supports:
 - front-stage and back-stage output separation;
 - missed-supplier checks and seven-round deep-search supplementation;
 - keyword matrices, supplier evidence chains, A/B/C/D screening, and manual feedback writeback.
+
+V1.4 adds three mandatory pre-output checklist items (missing any item means the run is not complete):
+
+- official website and public contact info are required columns for every candidate (write "未找到" when not found, never fabricate);
+- the round-7 coverage summary of missed-supplier checks must be shown as a standalone front-stage section in deep mode;
+- phone-verification feedback forms are automatically attached to deep sourcing results, without waiting for the user to ask.
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

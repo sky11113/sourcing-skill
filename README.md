@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.7
+### AI寻源需求澄清Skill V1.8
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -32,5 +32,12 @@ V1.7 adds **connector-first 1688 cloud collection**:
 - discovery stage prefers the Bazhuayu connector in WorkBuddy to cloud-collect 1688 product lists (tested template 2850 "1688-keyword search product list", fields include title/price/volume/store name/store age/store tag);
 - when no connector is configured, falls back to web searching 1688, without blocking existing flow;
 - collected data needs de-duplication by product link; when search noise is high, switch to more precise platform-specific keywords.
+
+V1.8 adds a **verified-supplier archive** — solving the "zero accumulation of historical verification conclusions" defect:
+
+- new file `17_供应商验证档案库.md` stores verified conclusions (enterprise authenticity / product match / procurement fit / supplier-type judgment);
+- three-step flow: **check archive first → create new verification → write back after verification**. Before sourcing starts and before candidate-pool building, query the archive; hit entries reuse historical conclusions without re-calling connectors; entries judged as traders must not enter A-class;
+- the feedback-writeback landing point in file 14 now points to the archive: enterprises marked "加入供应商库=是" in phone feedback are written back in archive format;
+- every sourcing run now "runs with memory" — verified conclusions are reused across tasks, saving connector budget and duplicate web searches.
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

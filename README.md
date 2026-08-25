@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.9.3
+### AI寻源需求澄清Skill V2.0
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -61,5 +61,13 @@ V1.9.3 is driven by the first real-world run (2026-08-25 rock-wool strip sourcin
 
 - **supplier-region scope is now a first-class question**: delivery location (logistics endpoint) and acceptable supplier region (candidate-pool boundary) are asked separately; when unconfirmed, the AI searches nationwide and labels it front-stage instead of silently excluding distant production areas on its own;
 - **known-supplier seed list + recall check**: the AI proactively asks for current/former suppliers during questioning; after the candidate pool is built, each seed supplier is checked for recall — a missed seed is a hard signal of a search blind spot (keyword gap / channel gap / name mismatch), triggering targeted re-search, and the recall rate is reported in the round-7 coverage summary.
+
+V2.0 is a structural rework of the search architecture, driven by a **second-round recall failure** in the same run (the user reported 5 current suppliers across two batches; 2 were still missing after the first recall round):
+
+- **industrial-belt hypothesis demoted from filter to ranker**: it only decides search order, never candidate-pool admission; no province may be excluded without explicit user instruction; round 4 becomes a nationwide production-area scan verified via full-coverage directories (no more confirming a hypothesis with the same hypothesis);
+- **mandatory-regime check → tiered full-coverage directories**: the AI first checks whether the category has legally mandatory licensing/certification/registration (SC food permits, CCC, green-building-material catalogs, discharge permits, etc. — mapped per category, not a fixed list); if yes, the official registry is enumerated first as the industry baseline; if no, Qichacha industry enumeration + discharge-permit platform serve as fallback; for categories with no directory at all (generic machining / pure trading / emerging), the output honestly states "no full directory exists — best-effort enumeration";
+- **recall failure ≥1 forces channel escalation**: switch to full-coverage directories to rebuild the baseline pool instead of endlessly tweaking keywords on marketing channels (which systematically miss strong factories that simply don't advertise — both missed suppliers had 64/77 insured employees);
+- **pool-size plausibility check**: before stopping at the 30–50 quota, estimate the industry's total factory count and report the coverage rate (the run stopped at 35 of ~150 ≈ 23%);
+- **upstream-category keywords are mandatory**: searching only the target product name finds only factories marketing that name; the matrix must also search the upstream category set (rock-wool strips → rock-wool boards / rock-wool manufacturers).
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

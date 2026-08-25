@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V2.0
+### AI寻源需求澄清Skill V2.0.2
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -69,5 +69,10 @@ V2.0 is a structural rework of the search architecture, driven by a **second-rou
 - **recall failure ≥1 forces channel escalation**: switch to full-coverage directories to rebuild the baseline pool instead of endlessly tweaking keywords on marketing channels (which systematically miss strong factories that simply don't advertise — both missed suppliers had 64/77 insured employees);
 - **pool-size plausibility check**: before stopping at the 30–50 quota, estimate the industry's total factory count and report the coverage rate (the run stopped at 35 of ~150 ≈ 23%);
 - **upstream-category keywords are mandatory**: searching only the target product name finds only factories marketing that name; the matrix must also search the upstream category set (rock-wool strips → rock-wool boards / rock-wool manufacturers).
+
+V2.0.2 fixes the candidate-ranking dimension exposed by the same run ("results didn't meet expectations"):
+
+- **same-application-scenario supply experience is now the primary A-class ranking key**: every candidate is checked for verifiable evidence of producing/supplying the same-use product for the confirmed application scenario (dedicated product line / government registration / peer-customer references / test reports issued under that use); evidence ✅ ranks first, no-evidence ❓ is not downgraded but ranks lower and goes to the phone-checklist — ranking priority is above company size, brand endorsement, and distance. Lesson: giants ranked by size/brand mainly sell "boards/insulation systems", while the user's actual suppliers are all sandwich-panel/insulation-board core strip specialists;
+- **Octoparse 2850 short-keyword rule (tested)**: the connector is alive (earlier "not connected" was a misjudgment); keywords must be single short terms — space-combined phrases return completely irrelevant items (a combined keyword returned 10 rows of T-shirts); results are fuzzy category matches, suitable for discovery rather than precise filtering.
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.9
+### AI寻源需求澄清Skill V1.9.2
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -45,5 +45,16 @@ V1.9 adds **parameter three-state marking** and **funnel-triggered evidence chan
 - archive data split into a dedicated file `17a_供应商档案数据.md` (append-only), while file 17 keeps only rules and format definitions;
 - **parameter classification + three-state marking**: hard specs / soft specs / unknown specs; for each hard spec the AI outputs only ✅ evidence found / ❓ no evidence (no downgrade, goes to phone-verification checklist) / ❌ counter-evidence (the only case allowing downgrade). Core principle: the AI judges whether evidence is sufficient, never whether the product is qualified;
 - **funnel-triggered evidence channels**: fast lane (Qichacha registry + store/website pages) runs for every candidate; mid lane (AI opens 1688 product detail pages directly to read SKU parameter tables — tested working without login, ~60/65 specs readable; 5-8 promoted candidates only); counter-evidence lane (CNCA certificate verification at cx.cnca.cn, certificate-listed candidates only); bottom lane (phone + samples, 1-3 finalists). Evidence investment is proportional to promotion; elimination relies only on hard rules (counter-evidence / deregistration / user exclusions / archive exclusions), never on AI's subjective coverage judgment; any channel failure is recorded as ❓ without blocking the flow. Patent and standards-drafting channels are not adopted (coverage among SME suppliers is too low); Bazhuayu template 2857 (product detail scraping) tested unusable (0 rows, likely login wall) — do not use.
+
+V1.9.1 is a defect-fix release after a full-chain audit: layer-3 procurement fit now follows the same three-state rule (❓ no evidence → "pending confirmation" only, never downgrade; only ❌ counter-evidence downgrades); quick mode gets a minimal verification set (archive query + A-class fast-lane registry check only); negative cases are written back to the archive ("排除" even when "add to supplier archive = no"); archive writes require git push + Codex copy sync; CNCA certificate verification tested — the site is accessible but queries require a CAPTCHA, so the AI generates a "certificate verification checklist" for the user to check manually (~1 min each); A-class hard-spec three-state marking and an aggregated phone-verification checklist are now front-stage display fields; B-class layer-2 depth clarified as shallow verification.
+
+V1.9.2 adds a **three-tier supplier-type preference** — turning "what about traders?" from an after-the-fact patch into a first-round requirement input:
+
+- **Preference A (manufacturers only)**: traders are excluded from the candidate pool entirely;
+- **Preference B (both accepted, no priority)**: traders compete on equal footing with factories and may enter A-class;
+- **Preference C (both accepted, factories first)**: traders are capped at B-class, ranked after factory candidates;
+- the old one-size-fits-all rule "traders must never enter A-class" (previously written across files 08/13/15/17 and the SKILL checklist) is replaced by preference-driven tiering; archive hits for "trader" follow the same rule;
+- **negative write-back states are graded (archive stores facts, not verdicts)**: identity facts are always written back; "排除" is reserved for integrity-level counter-evidence (active impersonation, forged certificates, fake addresses), capability-level counter-evidence (cannot make the category / cannot meet hard specs), or explicit user rejection; a trader identity alone never triggers "排除" — the state follows the current task's preference;
+- archives marked "排除" solely due to trader identity trigger a front-stage prompt ("this trader is in the archive — re-include?") whenever the current preference is B or C, instead of silently skipping.
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.8
+### AI寻源需求澄清Skill V1.9
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -39,5 +39,11 @@ V1.8 adds a **verified-supplier archive** — solving the "zero accumulation of 
 - three-step flow: **check archive first → create new verification → write back after verification**. Before sourcing starts and before candidate-pool building, query the archive; hit entries reuse historical conclusions without re-calling connectors; entries judged as traders must not enter A-class;
 - the feedback-writeback landing point in file 14 now points to the archive: enterprises marked "加入供应商库=是" in phone feedback are written back in archive format;
 - every sourcing run now "runs with memory" — verified conclusions are reused across tasks, saving connector budget and duplicate web searches.
+
+V1.9 adds **parameter three-state marking** and **funnel-triggered evidence channels** — fixing "AI mistakenly rejects qualified suppliers by coverage rate" and "running every channel for every candidate makes the workflow slow and fragile":
+
+- archive data split into a dedicated file `17a_供应商档案数据.md` (append-only), while file 17 keeps only rules and format definitions;
+- **parameter classification + three-state marking**: hard specs / soft specs / unknown specs; for each hard spec the AI outputs only ✅ evidence found / ❓ no evidence (no downgrade, goes to phone-verification checklist) / ❌ counter-evidence (the only case allowing downgrade). Core principle: the AI judges whether evidence is sufficient, never whether the product is qualified;
+- **funnel-triggered evidence channels**: fast lane (Qichacha registry + store/website pages) runs for every candidate; mid lane (Bazhuayu template 2857 SKU parameter scraping, 5-8 promoted candidates only); counter-evidence lane (CNCA certificate verification at cx.cnca.cn, certificate-listed candidates only); bottom lane (phone + samples, 1-3 finalists). Evidence investment is proportional to promotion; elimination relies only on hard rules (counter-evidence / deregistration / user exclusions / archive exclusions), never on AI's subjective coverage judgment; any channel failure is recorded as ❓ without blocking the flow. Patent and standards-drafting channels are not adopted (coverage among SME suppliers is too low).
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

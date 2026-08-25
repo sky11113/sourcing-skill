@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V2.0.2
+### AI寻源需求澄清Skill V2.0.3
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -74,5 +74,10 @@ V2.0.2 fixes the candidate-ranking dimension exposed by the same run ("results d
 
 - **same-application-scenario supply experience is now the primary A-class ranking key**: every candidate is checked for verifiable evidence of producing/supplying the same-use product for the confirmed application scenario (dedicated product line / government registration / peer-customer references / test reports issued under that use); evidence ✅ ranks first, no-evidence ❓ is not downgraded but ranks lower and goes to the phone-checklist — ranking priority is above company size, brand endorsement, and distance. Lesson: giants ranked by size/brand mainly sell "boards/insulation systems", while the user's actual suppliers are all sandwich-panel/insulation-board core strip specialists;
 - **Octoparse 2850 short-keyword rule (tested)**: the connector is alive (earlier "not connected" was a misjudgment); keywords must be single short terms — space-combined phrases return completely irrelevant items (a combined keyword returned 10 rows of T-shirts); results are fuzzy category matches, suitable for discovery rather than precise filtering.
+
+V2.0.3 tightens the scenario-experience criterion into a verifiable record, driven by follow-up feedback from the same run:
+
+- **explicit production/sales records are the most accurate match criterion**: the best evidence that a candidate fits the target application scenario is a documented production/sales record for that exact use — a dedicated product line on sale for that scenario (e.g. sandwich-panel core strips), customer references/supply records in that scenario, government/industry registration under that use, or test reports issued for that use; vague "category relevance", company size, brand endorsement, and distance never substitute. The scenario must be questioned down to the concrete product/process level ("building insulation" → "exterior insulation decorative panel core") before this standard applies; when the user cannot answer, record "待供应商确认" and apply weak category-level matching with a label;
+- three-state marking unchanged: documented record ✅ (with source noted); category-relevant but no record ❓ — no downgrade, ranked lower, and the phone checklist asks "do you have supply records for this application?".
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

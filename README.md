@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.6
+### AI寻源需求澄清Skill V1.7
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -26,5 +26,11 @@ V1.6 adds **connector-first business-registry verification**:
 - verification stage prefers the Qichacha/Tianyancha connectors in WorkBuddy for business registry data (existence status, business scope, shareholder structure, actual controller, beneficial owner, affiliated enterprises);
 - when no connector is configured, falls back to searching public pages, marking paywalled content as "待人工核验" (pending manual verification);
 - connector queries give hard evidence for detecting trader-masquerading-as-factory: check whether the candidate's shareholders/affiliated enterprises contain a real production facility.
+
+V1.7 adds **connector-first 1688 cloud collection**:
+
+- discovery stage prefers the Bazhuayu connector in WorkBuddy to cloud-collect 1688 product lists (tested template 2850 "1688-keyword search product list", fields include title/price/volume/store name/store age/store tag);
+- when no connector is configured, falls back to web searching 1688, without blocking existing flow;
+- collected data needs de-duplication by product link; when search noise is high, switch to more precise platform-specific keywords.
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

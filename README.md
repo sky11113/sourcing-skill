@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V1.9.2
+### AI寻源需求澄清Skill V1.9.3
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -56,5 +56,10 @@ V1.9.2 adds a **three-tier supplier-type preference** — turning "what about tr
 - the old one-size-fits-all rule "traders must never enter A-class" (previously written across files 08/13/15/17 and the SKILL checklist) is replaced by preference-driven tiering; archive hits for "trader" follow the same rule;
 - **negative write-back states are graded (archive stores facts, not verdicts)**: identity facts are always written back; "排除" is reserved for integrity-level counter-evidence (active impersonation, forged certificates, fake addresses), capability-level counter-evidence (cannot make the category / cannot meet hard specs), or explicit user rejection; a trader identity alone never triggers "排除" — the state follows the current task's preference;
 - archives marked "排除" solely due to trader identity trigger a front-stage prompt ("this trader is in the archive — re-include?") whenever the current preference is B or C, instead of silently skipping.
+
+V1.9.3 is driven by the first real-world run (2026-08-25 rock-wool strip sourcing) and fixes two funnel-entry gaps:
+
+- **supplier-region scope is now a first-class question**: delivery location (logistics endpoint) and acceptable supplier region (candidate-pool boundary) are asked separately; when unconfirmed, the AI searches nationwide and labels it front-stage instead of silently excluding distant production areas on its own;
+- **known-supplier seed list + recall check**: the AI proactively asks for current/former suppliers during questioning; after the candidate pool is built, each seed supplier is checked for recall — a missed seed is a hard signal of a search blind spot (keyword gap / channel gap / name mismatch), triggering targeted re-search, and the recall rate is reported in the round-7 coverage summary.
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.

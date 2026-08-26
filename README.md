@@ -4,7 +4,7 @@ Professional procurement sourcing skill library, including AI role prompts, supp
 
 ## Included skill
 
-### AI寻源需求澄清Skill V2.0.3
+### AI寻源需求澄清Skill V2.0.4
 
 The repository root is the Codex Skill root. `SKILL.md` and all supporting workflow files live directly in this directory, so the repository can be used as the local Codex Skill working directory.
 
@@ -79,5 +79,10 @@ V2.0.3 tightens the scenario-experience criterion into a verifiable record, driv
 
 - **explicit production/sales records are the most accurate match criterion**: the best evidence that a candidate fits the target application scenario is a documented production/sales record for that exact use — a dedicated product line on sale for that scenario (e.g. sandwich-panel core strips), customer references/supply records in that scenario, government/industry registration under that use, or test reports issued for that use; vague "category relevance", company size, brand endorsement, and distance never substitute. The scenario must be questioned down to the concrete product/process level ("building insulation" → "exterior insulation decorative panel core") before this standard applies; when the user cannot answer, record "待供应商确认" and apply weak category-level matching with a label;
 - three-state marking unchanged: documented record ✅ (with source noted); category-relevant but no record ❓ — no downgrade, ranked lower, and the phone checklist asks "do you have supply records for this application?".
+
+V2.0.4 fixes an output-completeness execution gap found in the aluminum-profile run (the rule already existed in template 13; this version enforces it as a mandatory checklist item):
+
+- **front-tier tiered output completeness**: company names must be full registry-verifiable legal names; every entry must carry a website link and a public phone (Qichacha/Tianyancha connector contact-info lookup first, fallback web search, source and date noted, "not found" written when absent); all four tiers A/B/C/D must be present, each with a one-line basis — even when C/D are empty, write "none" explicitly instead of omitting the tiers;
+- **B2B-softarticle phantom companies are downgraded**: companies that appear only in B2B promotional articles and have no registry entity (tested: soft-article "Jiangxi Yongchang Aluminum" and "Jiangxi Zhonglv Building Materials" have no Qichacha entities) must not enter tiers A/B — downgrade to C with a "soft-article phantom" flag.
 
 Start with [`00_启动口令.md`](./00_启动口令.md), or read [`SKILL.md`](./SKILL.md) for the complete workflow.
